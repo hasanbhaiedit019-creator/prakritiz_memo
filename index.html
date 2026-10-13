@@ -73,6 +73,7 @@
     .item-row .iname{grid-column:1/-1}
   }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -106,7 +107,8 @@
   <input type="text" id="terms">
 
   <div class="actions">
-    <button class="btn orange" type="button" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn orange" type="button" id="dlPdf">PDF Download (A4)</button>
+    <button class="btn green" type="button" onclick="window.print()">Print</button>
     <button class="btn del" type="button" id="resetAll">Notun memo (sob muche felun)</button>
   </div>
 </section>
@@ -238,6 +240,28 @@ $('resetAll').onclick = () => {
 };
 
 buildEditor(); render();
+
+/* ===== PDF Download: browser er header/footer (time, title, url) chhara A4 PDF ===== */
+$('dlPdf').onclick = async () => {
+  const btn = $('dlPdf'), page = document.querySelector('.page');
+  btn.disabled = true; btn.textContent = 'PDF hocche...';
+  const oldH = page.style.height, oldW = page.style.width, oldMin = page.style.minHeight;
+  page.style.width = '210mm'; page.style.height = '296mm'; page.style.minHeight = '0';
+  try {
+    const name = 'Prakritiz-Memo-' + (data.memoNo || 'new') + '.pdf';
+    await html2pdf().set({
+      margin: 0,
+      filename: name,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: 794 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).from(page).save();
+  } catch (e) {
+    alert('PDF banano jai ni. "Print" button use korun.');
+  }
+  page.style.height = oldH; page.style.width = oldW; page.style.minHeight = oldMin;
+  btn.disabled = false; btn.textContent = 'PDF Download (A4)';
+};
 </script>
 </body>
 </html>
