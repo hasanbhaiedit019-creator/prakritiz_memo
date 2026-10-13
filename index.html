@@ -11,7 +11,7 @@
   body{font-family:'Poppins',Arial,sans-serif;background:#e9ecea;color:var(--ink);padding:24px 12px;font-size:13px}
 
   /* ---------- Edit panel (print e dekha jabe na) ---------- */
-  .panel{max-width:794px;margin:0 auto 18px;background:#fff;border-top:5px solid var(--orange);border-radius:8px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .panel{max-width:210mm;margin:0 auto 18px;background:#fff;border-top:5px solid var(--orange);border-radius:8px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
   .panel h2{font-size:16px;color:var(--green-dark);margin-bottom:12px}
   .panel h3{font-size:13px;color:var(--green);margin:14px 0 8px}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
@@ -25,7 +25,7 @@
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
   /* ---------- Memo ---------- */
-  .page{max-width:794px;min-height:1123px;margin:0 auto;background:#fff;display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,.12)}
+  .page{width:210mm;max-width:100%;min-height:297mm;margin:0 auto;background:#fff;display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,.12)}
   header{background:var(--green-dark);border-bottom:6px solid var(--orange);padding:26px 36px;display:flex;justify-content:space-between;align-items:center}
   header h1{font-family:'Playfair Display',serif;color:#fff;font-size:38px;font-weight:700}
   .logo-box{background:#fff;border-radius:8px;padding:4px 10px;display:flex;align-items:center;height:64px}
@@ -57,10 +57,13 @@
   .sign span{display:block;border-top:1.5px solid var(--line);padding-top:6px}
   footer{background:var(--green-dark);border-top:6px solid var(--orange);color:#fff;padding:16px 36px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px}
 
+  @page{size:A4 portrait;margin:0}
   @media print{
-    body{background:#fff;padding:0}
+    html,body{margin:0;padding:0;background:#fff;width:210mm}
     .panel{display:none}
-    .page{box-shadow:none;max-width:none;min-height:100vh}
+    .page{width:210mm;max-width:none;height:296mm;min-height:0;margin:0;box-shadow:none;break-inside:avoid}
+    tbody td{height:36px}
+    tbody tr.filler td{height:32px}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
   @media (max-width:560px){
